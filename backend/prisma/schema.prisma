@@ -14,21 +14,23 @@ datasource db {
 }
 
 model NFT {
-  id            Int      @id @default(autoincrement())
-  identifier    String   @unique
-  partnerName   String
-  puffs         String[]
-  imageUrl      String
-  privateKey    String
-  redeemed       Boolean  @default(false)  // Field for redemption status
-  discord       String?  // Nullable field
-  telegram      String?  // Nullable field
-  farcaster     String?  // Nullable field
-  github        String?  // Nullable field
-  username      String?  // Nullable field
-  firstName     String?  // Nullable field
-  lastName      String?  // Nullable field
-  jobTitle      String?  // Nullable field
-  tshirtSize    String?  // Nullable field
-  ownerAddress  String?  // Field to store the new NFT owner's Ethereum address (nullable initially)
+  id                Int      @id @default(autoincrement())
+  identifier        String   @unique
+  dynamicUserId     String?  @unique
+  partnerName       String
+  puffs             String[]
+  imageUrl          String
+  privateKey        String
+  redeemed          Boolean  @default(false)
+  telegramUsername  String?  // Updated to store the Telegram username
+  telegramImageUrl  String?  // Updated to store the Telegram image URL
+  farcaster         String?
+  github            String?
+  username          String?
+  firstName         String?
+  lastName          String?
+  jobTitle          String?
+  tshirtSize        String?
+  ownerAddress      String?  // Nullable field for owner address
 }
+

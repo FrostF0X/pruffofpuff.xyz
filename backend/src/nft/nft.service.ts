@@ -78,6 +78,31 @@ export class NftService {
         });
     }
 
+    async connectDynamic(identifier: string, dynamicUserId: string) {
+        return await this.prisma.nFT.update({
+            where: { identifier },
+            data: { dynamicUserId },
+        });
+    }
+
+    // Modified webhook handler to identify using dynamicUserId
+    async handleWebhook(payload: any) {
+        const { data } = payload;
+
+        // Extract the fields from the payload
+        const telegramUsername = data.accountUsername;
+        const telegramImageUrl = data.accountPhotos && data.accountPhotos.length > 0 ? data.accountPhotos[0] : null;
+        const dynamicUserId = data.userId as string; // Assuming the dynamic user ID is in the payload
+
+        // Update the NFT entry based on dynamicUserId
+        return await this.prisma.nFT.update({
+            where: { dynamicUserId },
+            data: {
+                telegramUsername,
+                telegramImageUrl,
+            },
+        });
+    }
     // Method to get all NFT data by identifier
     async getNft(identifier: string) {
         return await this.prisma.nFT.findUnique({

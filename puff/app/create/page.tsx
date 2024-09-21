@@ -35,7 +35,7 @@ const Main = () => {
                 isMulti
                 options={puffsOptions}
                 value={selectedPuff}
-                onChange={setSelectedPuff}
+                onChange={(newValue) => {setSelectedPuff(newValue.map(i => i))}}
                 placeholder="Select your puff(s)"
             />
             <button onClick={handleSubmit}>Submit and Upload</button>

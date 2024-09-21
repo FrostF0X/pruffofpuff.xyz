@@ -2,13 +2,14 @@
 CREATE TABLE "NFT" (
     "id" SERIAL NOT NULL,
     "identifier" TEXT NOT NULL,
+    "dynamicUserId" TEXT,
     "partnerName" TEXT NOT NULL,
     "puffs" TEXT[],
     "imageUrl" TEXT NOT NULL,
     "privateKey" TEXT NOT NULL,
     "redeemed" BOOLEAN NOT NULL DEFAULT false,
-    "discord" TEXT,
-    "telegram" TEXT,
+    "telegramUsername" TEXT,
+    "telegramImageUrl" TEXT,
     "farcaster" TEXT,
     "github" TEXT,
     "username" TEXT,
@@ -23,3 +24,6 @@ CREATE TABLE "NFT" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "NFT_identifier_key" ON "NFT"("identifier");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "NFT_dynamicUserId_key" ON "NFT"("dynamicUserId");

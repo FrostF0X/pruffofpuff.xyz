@@ -34,6 +34,19 @@ export class NftController {
         return await this.nftService.updateNftData(identifier, updateData);
     }
 
+    @Patch('/:identifier/connect-dynamic')
+    async connectDynamic(
+        @Param('identifier') identifier: string,
+        @Body('dynamicUserId') dynamicUserId: string
+    ) {
+        return await this.nftService.connectDynamic(identifier, dynamicUserId);
+    }
+
+    // Modified webhook route to use dynamicUserId
+    @Post('/webhook')
+    async handleWebhook(@Body() payload: any) {
+        return await this.nftService.handleWebhook(payload);
+    }
     @Get('/:identifier')
     async getNft(@Param('identifier') identifier: string) {
         return await this.nftService.getNft(identifier);
