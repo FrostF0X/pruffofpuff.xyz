@@ -1,6 +1,6 @@
 
 import { http, createConfig } from "wagmi";
-import {flowTestnet, mainnet} from "wagmi/chains";
+import {flowTestnet} from "wagmi/chains";
 
 export const config = createConfig({
   chains: [flowTestnet],

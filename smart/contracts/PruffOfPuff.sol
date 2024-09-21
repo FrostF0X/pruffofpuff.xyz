@@ -16,22 +16,20 @@ contract PruffOfPuff is ERC721URIStorage, AccessControl {
     event TokenMinted(address indexed to, uint256 indexed tokenId, string tokenURI);
     event EtherTransferred(address indexed to, uint256 amount);
 
-    constructor() ERC721("PruffOfPuffTest", "POFT1") {
-        // Grant the deployer the default admin role, which allows them to manage all roles
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    // Keep track of all token IDs for each owner
+    mapping(address => uint256[]) private _ownedTokens;
 
-        // Grant the deployer both the admin and pruffer roles
+    constructor() ERC721("PruffOfPuffTest", "POFT1") {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(ADMIN_ROLE, msg.sender);
         _grantRole(PRUFFER_ROLE, msg.sender);
     }
 
-    // Modifier to restrict access to only admins
     modifier onlyAdmin() {
         require(hasRole(ADMIN_ROLE, msg.sender), "Caller is not an admin");
         _;
     }
 
-    // Modifier to restrict access to only pruffers or admins
     modifier onlyAuthorized() {
         require(
             hasRole(PRUFFER_ROLE, msg.sender) || hasRole(ADMIN_ROLE, msg.sender),
@@ -40,48 +38,39 @@ contract PruffOfPuff is ERC721URIStorage, AccessControl {
         _;
     }
 
-    // Check if an address is an admin
     function isAdmin(address account) public view returns (bool) {
         return hasRole(ADMIN_ROLE, account);
     }
 
-    // Check if an address is a pruffer
     function isPruffer(address account) public view returns (bool) {
         return hasRole(PRUFFER_ROLE, account);
     }
 
-    // Override the supportsInterface function to handle both AccessControl and ERC721
     function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, ERC721URIStorage) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 
-    // Function to add a new admin, can only be called by admins
     function addAdmin(address account) public onlyAdmin {
         grantRole(ADMIN_ROLE, account);
     }
 
-    // Function to remove an admin, can only be called by admins
     function removeAdmin(address account) public onlyAdmin {
         revokeRole(ADMIN_ROLE, account);
     }
 
-    // Function to add a pruffer, can only be called by admins
     function addPruffer(address account) public onlyAdmin {
         grantRole(PRUFFER_ROLE, account);
     }
 
-    // Function to remove a pruffer, can only be called by admins
     function removePruffer(address account) public onlyAdmin {
         revokeRole(PRUFFER_ROLE, account);
     }
 
-    // Override the tokenURI function to prepend ipfs:// to the stored token URI
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         string memory _tokenURI = super.tokenURI(tokenId);
         return string(abi.encodePacked("ipfs://", _tokenURI));
     }
 
-    // Function to mint a new token to a specific address, transfers 0.01 ether to the destination address
     function mint(address destination, string memory _tokenURI) public payable onlyAuthorized {
         require(msg.value == 0.01 ether, "Must send 0.01 ether to mint");
 
@@ -91,11 +80,39 @@ contract PruffOfPuff is ERC721URIStorage, AccessControl {
         _mint(destination, newTokenId);
         _setTokenURI(newTokenId, _tokenURI);
 
-        // Transfer 0.01 ether to the destination address
+        // Track token ownership
+        _ownedTokens[destination].push(newTokenId);
+
         (bool success, ) = destination.call{value: msg.value}("");
         require(success, "Ether transfer failed");
 
         emit TokenMinted(destination, newTokenId, _tokenURI);
         emit EtherTransferred(destination, msg.value);
+    }
+
+    // New function to transfer the first NFT found from one address to another
+    function transferFirstNFT(address from, address to) public onlyAuthorized {
+        require(_ownedTokens[from].length > 0, "No NFTs to transfer");
+
+        uint256 tokenId = _ownedTokens[from][0]; // Get the first token ID
+        safeTransferFrom(from, to, tokenId); // Transfer the token
+
+        // Remove the token from the original owner's list
+        _removeTokenFromList(from, tokenId);
+
+        // Add the token to the new owner's list
+        _ownedTokens[to].push(tokenId);
+    }
+
+    // Internal function to remove a token from the owner's list
+    function _removeTokenFromList(address from, uint256 tokenId) internal {
+        uint256[] storage ownerTokens = _ownedTokens[from];
+        for (uint256 i = 0; i < ownerTokens.length; i++) {
+            if (ownerTokens[i] == tokenId) {
+                ownerTokens[i] = ownerTokens[ownerTokens.length - 1]; // Replace with the last token
+                ownerTokens.pop(); // Remove the last element
+                break;
+            }
+        }
     }
 }

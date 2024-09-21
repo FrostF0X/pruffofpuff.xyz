@@ -6,7 +6,6 @@ import {WagmiProvider} from "wagmi";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {DynamicWagmiConnector} from "@dynamic-labs/wagmi-connector";
 import {config} from "@/lib/wagmi";
-import * as net from "node:net";
 
 
 export default function Providers({

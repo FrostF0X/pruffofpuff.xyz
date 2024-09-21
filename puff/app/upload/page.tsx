@@ -41,7 +41,7 @@ const UploadPage = () => {
         };
 
         uploadData();
-    }, [router]);
+    }, [router, puffs]);
 
     if (error) {
         return <div>{error}</div>;

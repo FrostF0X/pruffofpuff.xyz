@@ -40,7 +40,7 @@ const MintPage = () => {
             // Pass the selected puffs as a query parameter to the upload page
             router.push(url.href);
         }
-    }, [isSuccess, router]);
+    }, [isSuccess, router, identifier]);
 
     return (
         <div>

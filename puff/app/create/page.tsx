@@ -11,7 +11,7 @@ const puffsOptions = [
 ];
 
 const Main = () => {
-    const [selectedPuff, setSelectedPuff] = useState<any[]>([]);
+    const [selectedPuff, setSelectedPuff] = useState<{value: string}[]>([]);
     const router = useRouter();
 
     const handleSubmit = () => {
