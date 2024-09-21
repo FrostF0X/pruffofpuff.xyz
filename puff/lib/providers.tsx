@@ -37,6 +37,11 @@ export default function Providers({
                     onUserProfileUpdate: (e) => {
                         console.log(e);
                     },
+                },
+                handlers: {
+                    handleAuthenticatedUser: async (e) => {
+                        console.log(e);
+                    }
                 }
             }}
         >

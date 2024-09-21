@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useReadContract } from 'wagmi';
 import './page.css';
 import contracts from '../contracts/deployedContracts';
+import {chain} from "@/lib/wagmi";
 // Contract details
 
 interface LoggedInUserProps {
@@ -16,8 +17,8 @@ export default function LoggedInUser({ walletAddress }: LoggedInUserProps) {
 
     // Read from contract using useReadContract
     const { data: isPruffer, error, isLoading, status } = useReadContract({
-        abi: contracts["545"].PruffOfPuff.abi,
-        address: contracts["545"].PruffOfPuff.address,
+        abi: contracts[chain.id].PruffOfPuff.abi,
+        address: contracts[chain.id].PruffOfPuff.address,
         functionName: 'isPruffer',
         args: [walletAddress],
     });

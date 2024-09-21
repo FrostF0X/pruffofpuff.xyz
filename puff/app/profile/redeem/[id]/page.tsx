@@ -1,15 +1,14 @@
 'use client';
 
 import {useEffect, useState} from 'react';
-import {useParams, useSearchParams} from 'next/navigation';
-import {createWalletClient, http} from 'viem';
+import {useParams, useSearchParams, useRouter} from 'next/navigation';
+import {createWalletClient} from 'viem';
 import {privateKeyToAccount} from 'viem/accounts';
 import contracts from '../../../../contracts/deployedContracts';
 
-import {DynamicWidget, useUserWallets} from '@dynamic-labs/sdk-react-core';
-import {flowTestnet} from "wagmi/chains";
+import {DynamicWidget, useDynamicContext, useUserWallets} from '@dynamic-labs/sdk-react-core';
 import axios from "axios";
-import {router} from "next/client";
+import {chain, rpc} from "@/lib/wagmi";
 
 function Authentication() {
     const userWallets = useUserWallets();
@@ -31,34 +30,38 @@ function Authentication() {
 }
 
 const Page = ({walletAddress}: { walletAddress: string }) => {
+    const router = useRouter();
     const {id} = useParams();
     const params = useSearchParams();
     const privateKeyParam = params.get('privateKey') as `0x${string}`;
-
-    // Create wallet client using Viem and privateKey
-
+    const {user} = useDynamicContext();
+    const [started, setStarted] = useState<boolean>(false);
     useEffect(() => {
         (async () => {
+            if (!user || started) {
+                return;
+            }
+            setStarted(true);
+
             const client = createWalletClient({
-                chain: flowTestnet,
-                transport: http(),
+                chain: chain,
+                transport: rpc,
             });
 
-            // Create account using the provided private key
             const account = privateKeyToAccount(privateKeyParam);
             await client.writeContract({
-                abi: contracts["545"].PruffOfPuff.abi,
-                address: contracts["545"].PruffOfPuff.address,
+                abi: contracts[chain.id].PruffOfPuff.abi,
+                address: contracts[chain.id].PruffOfPuff.address,
                 functionName: 'transferFirstNFT',
-                args: [account.address, walletAddress],
+                args: [walletAddress],
                 account
             });
             const apiUrl = process.env.NEXT_PUBLIC_API_URL;
             await axios.post(`${apiUrl}/nft/${id}/redeemed`);
-            const url = new URL(`/profile/redeem/${id}/edit`, window.location.origin);
-            router.push(url.href);
+            await axios.patch(`${apiUrl}/nft/${id}/connect-dynamic`, {dynamicUserId: user.userId});
+            await router.push(`/profile/${id}`);
         })();
-    }, [privateKeyParam, walletAddress, id]);
+    }, [privateKeyParam, walletAddress, id, user, router, started]);
 
 
     return (

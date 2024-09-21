@@ -8,6 +8,7 @@ import {
     useWriteContract,
 } from 'wagmi';
 import {parseEther} from "viem";
+import {chain, tempGas} from "@/lib/wagmi";
 
 const MintPage = () => {
     const wallets = useConnectors();
@@ -21,11 +22,11 @@ const MintPage = () => {
     if (!initiated && wallets.length) {
         setTimeout(() => {
             writeContract({
-                abi: contracts["545"].PruffOfPuff.abi,
-                address: contracts["545"].PruffOfPuff.address,
+                abi: contracts[chain.id].PruffOfPuff.abi,
+                address: contracts[chain.id].PruffOfPuff.address,
                 functionName: 'mint',
                 args: [walletAddress, identifier],
-                value: parseEther('0.01')
+                value: parseEther(tempGas)
             })
         }, 3000);
         setInitiated(true);

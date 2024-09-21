@@ -1,13 +1,14 @@
 'use client';
 
-import {DynamicWidget, useUserWallets} from '@dynamic-labs/sdk-react-core';
+import {DynamicWidget, useDynamicContext, useUserWallets} from '@dynamic-labs/sdk-react-core';
 import {useEffect, useState} from 'react';
 import LoggedInUser from './LoggedInUser';
 
 export default function Authentication() {
     const userWallets = useUserWallets();
     const [walletAddress, setWalletAddress] = useState<string | null>(null);
-
+    const {userWithMissingInfo} = useDynamicContext();
+    console.log(userWithMissingInfo);
     useEffect(() => {
         if (userWallets.length > 0) {
             // Set the wallet address when the user is authenticated

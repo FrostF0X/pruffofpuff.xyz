@@ -11,7 +11,7 @@ const ConfigurePage = () => {
             "tech": "Ndef",
             "tnf": 1,
             "rtd": "U",
-            "value": {"value": `https://pruffofpuff.pages.dev/profile/${identifier}`}
+            "value": {"value": `https://pruffofpuff-xyz.pages.dev/profile/${identifier}`}
         }
     };
     router.push('com.washow.nfcopenrewriter://share?data=' + encodeURIComponent(JSON.stringify(payload)));

@@ -30,14 +30,6 @@ contract PruffOfPuff is ERC721URIStorage, AccessControl {
         _;
     }
 
-    modifier onlyAuthorized() {
-        require(
-            hasRole(PRUFFER_ROLE, msg.sender) || hasRole(ADMIN_ROLE, msg.sender),
-            "Caller is not authorized"
-        );
-        _;
-    }
-
     function isAdmin(address account) public view returns (bool) {
         return hasRole(ADMIN_ROLE, account);
     }
@@ -71,9 +63,7 @@ contract PruffOfPuff is ERC721URIStorage, AccessControl {
         return string(abi.encodePacked("ipfs://", _tokenURI));
     }
 
-    function mint(address destination, string memory _tokenURI) public payable onlyAuthorized {
-        require(msg.value == 0.01 ether, "Must send 0.01 ether to mint");
-
+    function mint(address destination, string memory _tokenURI) public payable {
         _tokenIds++;
         uint256 newTokenId = _tokenIds;
 
@@ -90,15 +80,15 @@ contract PruffOfPuff is ERC721URIStorage, AccessControl {
         emit EtherTransferred(destination, msg.value);
     }
 
-    // New function to transfer the first NFT found from one address to another
-    function transferFirstNFT(address from, address to) public onlyAuthorized {
-        require(_ownedTokens[from].length > 0, "No NFTs to transfer");
+    // Function to transfer the first NFT owned by msg.sender
+    function transferFirstNFT(address to) public {
+        require(_ownedTokens[msg.sender].length > 0, "No NFTs to transfer");
 
-        uint256 tokenId = _ownedTokens[from][0]; // Get the first token ID
-        safeTransferFrom(from, to, tokenId); // Transfer the token
+        uint256 tokenId = _ownedTokens[msg.sender][0]; // Get the first token ID owned by msg.sender
+        safeTransferFrom(msg.sender, to, tokenId); // Transfer the token
 
         // Remove the token from the original owner's list
-        _removeTokenFromList(from, tokenId);
+        _removeTokenFromList(msg.sender, tokenId);
 
         // Add the token to the new owner's list
         _ownedTokens[to].push(tokenId);
