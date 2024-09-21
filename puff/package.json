@@ -1,0 +1,32 @@
+{
+  "name": "my-dynamic-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port=8000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@dynamic-labs/ethereum": "^3.0.0-alpha",
+    "@dynamic-labs/sdk-react-core": "^3.0.0-alpha",
+    "@dynamic-labs/wagmi-connector": "^3.0.0-alpha",
+    "@tanstack/react-query": "^5.27.5",
+    "axios": "^1.7.7",
+    "next": "14.2.13",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-select": "^5.8.1",
+    "viem": "*",
+    "wagmi": "2.5.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.13",
+    "typescript": "^5"
+  }
+}
