@@ -1,5 +1,5 @@
 import {http, createConfig} from "wagmi";
-import {flowTestnet, sepolia} from "wagmi/chains";
+import {flowTestnet} from "wagmi/chains";
 
 export const chain = flowTestnet;
 // export const rpc = http('https://rpc.sepolia.org');
