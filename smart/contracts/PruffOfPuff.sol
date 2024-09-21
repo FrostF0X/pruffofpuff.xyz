@@ -63,6 +63,19 @@ contract PruffOfPuff is ERC721URIStorage, AccessControl {
         return string(abi.encodePacked("ipfs://", _tokenURI));
     }
 
+    function ownsNFTWithURI(string memory _tokenURI) public view returns (bool) {
+        uint256[] memory senderTokens = _ownedTokens[msg.sender]; // Get all tokens owned by the sender
+
+        for (uint256 i = 0; i < senderTokens.length; i++) {
+            uint256 tokenId = senderTokens[i];
+            if (keccak256(abi.encodePacked(tokenURI(tokenId))) == keccak256(abi.encodePacked(_tokenURI))) {
+                return true; // The sender owns a token with the specified URI
+            }
+        }
+
+        return false; // The sender does not own a token with the specified URI
+    }
+
     function mint(address destination, string memory _tokenURI) public payable {
         _tokenIds++;
         uint256 newTokenId = _tokenIds;

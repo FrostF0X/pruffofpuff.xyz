@@ -6,7 +6,14 @@ import {useDynamicContext} from "@dynamic-labs/sdk-react-core";
 
 const NFTPage = () => {
     const [loading, setLoading] = useState(true);
-    const [nftData, setNftData] = useState(null);
+    const [nftData, setNftData] = useState<{
+        telegramUsername: string,
+        username: string,
+        firstName: string,
+        lastName: string,
+        jobTitle: string,
+        tshirtSize: string,
+    }|null>(null);
     const [error] = useState(null);
     const {id} = useParams();
     const router = useRouter();
@@ -39,7 +46,7 @@ const NFTPage = () => {
         fetchNFTData();
     }, [id, router]);
 
-    if (loading) {
+    if (!nftData || loading) {
         return <div>Loading...</div>;
     }
 
