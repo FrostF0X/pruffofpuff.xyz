@@ -13,7 +13,7 @@ export const config = createConfig({
     multiInjectedProviderDiscovery: false,
     ssr: true,
     transports: {
-        [chain.id]: http('https://rpc.sepolia.org'),
+        [chain.id]: rpc,
     },
 });
 

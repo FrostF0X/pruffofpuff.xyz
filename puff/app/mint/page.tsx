@@ -15,7 +15,7 @@ const MintPage = () => {
     const params = useSearchParams();
     const router = useRouter();
     const identifier = params.get('identifier') as string;
-    const walletAddress = params.get('walletAddress') as string;
+    const walletAddress = params.get('walletAddress') as `0x${string}`;
     const [initiated, setInitiated] = useState<boolean>(false);
     const {writeContract, isSuccess, isError, error} = useWriteContract();
 

@@ -6,7 +6,7 @@
 const deployedContracts = {
   545: {
     PruffOfPuff: {
-      address: "0xff260c7c4fb52dec4780abee5ede90b45f5aacf8",
+      address: "0x403C06f78269934Ed18033a42FA1732FaDf0D110",
       abi: [
         {
           type: "constructor",
@@ -500,7 +500,7 @@ const deployedContracts = {
             },
           ],
           outputs: [],
-          stateMutability: "nonpayable",
+          stateMutability: "payable",
         },
         {
           type: "function",
@@ -1185,6 +1185,25 @@ const deployedContracts = {
           ],
           outputs: [],
           stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "ownsNFTWithURI",
+          inputs: [
+            {
+              name: "_tokenURI",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
         },
         {
           type: "function",
@@ -2744,4 +2763,4 @@ const deployedContracts = {
   },
 } as const;
 
-export default deployedContracts satisfies GenericContractsDeclaration;
+export default deployedContracts;

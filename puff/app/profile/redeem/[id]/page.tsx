@@ -2,13 +2,13 @@
 
 import {useEffect, useState} from 'react';
 import {useParams, useSearchParams, useRouter} from 'next/navigation';
-import {createWalletClient} from 'viem';
+import {createWalletClient, parseEther, parseGwei} from 'viem';
 import {privateKeyToAccount} from 'viem/accounts';
 import contracts from '../../../../contracts/deployedContracts';
 
 import {DynamicWidget, useDynamicContext, useUserWallets} from '@dynamic-labs/sdk-react-core';
 import axios from "axios";
-import {chain, rpc} from "@/lib/wagmi";
+import {chain, rpc, tempGas} from "@/lib/wagmi";
 
 function Authentication() {
     const userWallets = useUserWallets();
@@ -26,10 +26,10 @@ function Authentication() {
     }
 
     // Pass the walletAddress to the logged-in user component
-    return <Page walletAddress={walletAddress}/>;
+    return <Page walletAddress={walletAddress as `0x${string}`}/>;
 }
 
-const Page = ({walletAddress}: { walletAddress: string }) => {
+const Page = ({walletAddress}: { walletAddress: `0x${string}` }) => {
     const router = useRouter();
     const {id} = useParams();
     const params = useSearchParams();
