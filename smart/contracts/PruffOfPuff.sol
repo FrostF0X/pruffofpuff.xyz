@@ -23,7 +23,6 @@ contract PruffOfPuff is ERC721URIStorage, AccessControl {
         // Grant the deployer both the admin and pruffer roles
         _grantRole(ADMIN_ROLE, msg.sender);
         _grantRole(PRUFFER_ROLE, msg.sender);
-
     }
 
     // Modifier to restrict access to only admins
@@ -76,21 +75,27 @@ contract PruffOfPuff is ERC721URIStorage, AccessControl {
         revokeRole(PRUFFER_ROLE, account);
     }
 
+    // Override the tokenURI function to prepend ipfs:// to the stored token URI
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        string memory _tokenURI = super.tokenURI(tokenId);
+        return string(abi.encodePacked("ipfs://", _tokenURI));
+    }
+
     // Function to mint a new token to a specific address, transfers 0.01 ether to the destination address
-    function mint(address destination, string memory tokenURI) public payable onlyAuthorized {
+    function mint(address destination, string memory _tokenURI) public payable onlyAuthorized {
         require(msg.value == 0.01 ether, "Must send 0.01 ether to mint");
 
         _tokenIds++;
         uint256 newTokenId = _tokenIds;
 
         _mint(destination, newTokenId);
-        _setTokenURI(newTokenId, tokenURI);
+        _setTokenURI(newTokenId, _tokenURI);
 
         // Transfer 0.01 ether to the destination address
         (bool success, ) = destination.call{value: msg.value}("");
         require(success, "Ether transfer failed");
 
-        emit TokenMinted(destination, newTokenId, tokenURI);
+        emit TokenMinted(destination, newTokenId, _tokenURI);
         emit EtherTransferred(destination, msg.value);
     }
 }
