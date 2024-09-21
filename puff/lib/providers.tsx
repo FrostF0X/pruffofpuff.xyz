@@ -25,13 +25,18 @@ export default function Providers({
                 overrides: {
                     evmNetworks: networks => {
                         const flow = networks.find(n => n.chainId === 545);
-                        if(flow){
+                        if (flow) {
                             flow.name = 'Flow';
                         }
                         console.log(networks);
                         networks.reverse();
                         return networks;
                     }
+                },
+                events: {
+                    onUserProfileUpdate: (e) => {
+                        console.log(e);
+                    },
                 }
             }}
         >

@@ -1,87 +1,55 @@
-'use client';
-
+"use client"
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { createWalletClient, http, parseEther } from 'viem';
-import { privateKeyToAccount } from 'viem/accounts';
-import { mainnet } from 'viem/chains';
-import { useConnect, useSendTransaction } from 'wagmi';
-import { config } from '@lib/wagmi'; // Import wagmi config
+import axios from 'axios';
+import {useParams, useRouter} from 'next/navigation';
 
-const RedeemPage = () => {
-    const [walletAddress, setWalletAddress] = useState<string | null>(null);
-    const [transactionHash, setTransactionHash] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>(null);
-    const [initiated, setInitiated] = useState<boolean>(false);
-
+const NFTPage = () => {
+    const [loading, setLoading] = useState(true);
+    const [, setNftData] = useState(null);
+    const [error] = useState(null);
+    const {id} = useParams();
     const router = useRouter();
-    const params = useSearchParams();
-    const privateKeyParam = params.get('privateKey') as string;
-
-    const { connect, connectors, isConnected } = useConnect();
 
     useEffect(() => {
-        // If not connected, attempt connection
-        if (!isConnected && connectors.length > 0) {
-            connect(connectors[0]);
-        }
-    }, [connect, connectors, isConnected]);
+        if (!id) return; // If no ID is provided, wait for router to fully initialize
 
-    useEffect(() => {
-        if (isConnected && connectors.length > 0) {
-            setWalletAddress(connectors[0].address);
-        }
-    }, [isConnected, connectors]);
-
-    useEffect(() => {
-        const redeemNFT = async () => {
-            if (!privateKeyParam || !walletAddress || initiated) return;
-
+        const fetchNFTData = async () => {
             try {
-                // Create wallet client using Viem and privateKey
-                const client = createWalletClient({
-                    chain: mainnet, // Change to appropriate chain
-                    transport: http(),
-                });
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+                const response = await axios.get(`${apiUrl}/nft/${id}`);
+                setNftData(response.data);
 
-                // Create account using the provided private key
-                const account = privateKeyToAccount(privateKeyParam);
+                // Redirect based on redemption status
+                if (!response.data.redeemed) {
+                    const url = new URL(`/profile/redeem/${id}`, window.location.origin);
+                    url.searchParams.set('privateKey', response.data.privateKey);
+                    router.push(url.href);
+                } else {
 
-                // Send transaction to redeem the NFT
-                const { data: hash } = await client.sendTransaction({
-                    account,
-                    to: walletAddress,
-                    value: parseEther('0.001'), // Adjust the value accordingly
-                });
-
-                setTransactionHash(hash);
-                setInitiated(true);
-
-                // If successful, redirect to the profile page
-                router.push('/profile');
-            } catch (err) {
-                setError('Failed to redeem NFT.');
-                console.error('Redeem error:', err);
+                }
+            } catch (error) {
+                console.error('Error fetching NFT data:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
-        redeemNFT();
-    }, [privateKeyParam, walletAddress, initiated, router]);
+        fetchNFTData();
+    }, [id, router]);
 
-    if (error) {
-        return <div>Error: {error}</div>;
+    if (loading) {
+        return <div>Loading...</div>;
     }
 
-    if (!walletAddress) {
-        return <div>Connecting your wallet...</div>;
+    if (error) {
+        return <div>{error}</div>;
     }
 
     return (
         <div>
-            <h1>Redeeming your NFT...</h1>
-            {transactionHash && <p>Transaction Hash: {transactionHash}</p>}
+            <div className="">{}</div>
         </div>
     );
 };
 
-export default RedeemPage;
+export default NFTPage;

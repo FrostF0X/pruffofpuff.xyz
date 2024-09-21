@@ -1,9 +1,9 @@
-import {Injectable} from '@nestjs/common';
-import {PrismaService} from '../prisma/prisma.service';
-import {create} from 'ipfs-http-client';
-import {ethers} from 'ethers';
-import {ConfigService} from '@nestjs/config';
-import {v4 as uuidv4} from 'uuid';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { create } from 'ipfs-http-client';
+import { ethers } from 'ethers';
+import { ConfigService } from '@nestjs/config';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class NftService {
@@ -21,7 +21,6 @@ export class NftService {
     }
 
     async createNft(partnerName: string, puffs: string[]) {
-        // Create metadata
         const metadata = {
             name: 'NFT Token ' + uuidv4().toString(),
             description: 'A simple NFT token',
@@ -31,7 +30,7 @@ export class NftService {
         };
 
         // Upload to IPFS
-        const {cid} = await this.ipfs.add(JSON.stringify(metadata));
+        const { cid } = await this.ipfs.add(JSON.stringify(metadata));
         const identifier = cid.toString();
 
         // Generate Ethereum wallet
@@ -51,6 +50,38 @@ export class NftService {
         });
 
         // Return both identifier and wallet address
-        return {identifier, walletAddress};
+        return { identifier, walletAddress };
+    }
+
+    // Method to mark NFT as redeemed and update the new owner address
+    async redeemNft(identifier: string, newOwnerAddress: string) {
+        return await this.prisma.nFT.update({
+            where: { identifier },
+            data: { redeemed: true, ownerAddress: newOwnerAddress },
+        });
+    }
+
+    async updateNftData(identifier: string, updateData: {
+        discord?: string,
+        telegram?: string,
+        farcaster?: string,
+        github?: string,
+        username?: string,
+        firstName?: string,
+        lastName?: string,
+        jobTitle?: string,
+        tshirtSize?: string
+    }) {
+        return await this.prisma.nFT.update({
+            where: { identifier },
+            data: updateData,
+        });
+    }
+
+    // Method to get all NFT data by identifier
+    async getNft(identifier: string) {
+        return await this.prisma.nFT.findUnique({
+            where: { identifier },
+        });
     }
 }

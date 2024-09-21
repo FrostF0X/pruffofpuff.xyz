@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   545: {
     PruffOfPuff: {
-      address: "0xe3da5ee0c3b3529f27254879b22e2cbf71f5b8ea",
+      address: "0xff260c7c4fb52dec4780abee5ede90b45f5aacf8",
       abi: [
         {
           type: "constructor",
@@ -268,7 +268,7 @@ const deployedContracts = {
               internalType: "address",
             },
             {
-              name: "tokenURI",
+              name: "_tokenURI",
               type: "string",
               internalType: "string",
             },
@@ -489,6 +489,24 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "transferFirstNFT",
+          inputs: [
+            {
+              name: "from",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "to",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
         },
         {
           type: "function",
@@ -1166,7 +1184,7 @@ const deployedContracts = {
               internalType: "address",
             },
             {
-              name: "tokenURI",
+              name: "_tokenURI",
               type: "string",
               internalType: "string",
             },
@@ -1387,6 +1405,24 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "transferFirstNFT",
+          inputs: [
+            {
+              name: "from",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "to",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
         },
         {
           type: "function",

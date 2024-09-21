@@ -59,14 +59,6 @@ export default function DynamicMethods({ isDarkMode }) {
         setResult(safeStringify(walletClient));
     }
 
-    async function signMessage() {
-        if(!primaryWallet || !isEthereumWallet(primaryWallet)) return;
-
-        const signature = await primaryWallet.signMessage("Hello World");
-        setResult(signature);
-    }
-
-
 
    return (
     <>
