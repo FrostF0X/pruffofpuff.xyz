@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {useParams, useSearchParams, useRouter} from 'next/navigation';
 import {createWalletClient} from 'viem';
 import {privateKeyToAccount} from 'viem/accounts';
@@ -36,7 +36,7 @@ function Authentication() {
         return <div>Loading</div>;
     }
 
-    return <Page
+    return <ActualPage
         walletAddress={walletAddress as `0x${string}`}
         privateKeyParam={privateKeyParam}
         user={user}
@@ -53,7 +53,7 @@ interface PageProps {
     router: AppRouterInstance;
 }
 
-class Page extends React.Component<PageProps, { started: boolean }> {
+class ActualPage extends React.Component<PageProps, { started: boolean }> {
     constructor(props: PageProps) {
         super(props);
         this.state = {
@@ -102,8 +102,12 @@ class Page extends React.Component<PageProps, { started: boolean }> {
     }
 }
 
-const RedeemPage = () => {
-    return <Authentication/>;
-};
-
-export default RedeemPage;
+const Page = () => {
+    return (
+        // You could have a loading skeleton as the `fallback` too
+        <Suspense>
+            <Authentication />
+        </Suspense>
+    )
+}
+export default Page;

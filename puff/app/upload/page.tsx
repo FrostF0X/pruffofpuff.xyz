@@ -56,7 +56,7 @@ const ActualPage = () => {
     );
 };
 
-export function UploadPage() {
+const Page = () => {
     return (
         // You could have a loading skeleton as the `fallback` too
         <Suspense>
@@ -64,4 +64,4 @@ export function UploadPage() {
         </Suspense>
     )
 }
-export default UploadPage;
+export default Page;

@@ -18,13 +18,12 @@ const ActualPage = () => {
     router.push('com.washow.nfcopenrewriter://share?data=' + encodeURIComponent(JSON.stringify(payload)));
     return "";
 };
-const ConfigurePage = () => {
+const Page = () => {
     return (
         // You could have a loading skeleton as the `fallback` too
         <Suspense>
-            <ActualPage/>
+            <ActualPage />
         </Suspense>
     )
 }
-export default ConfigurePage;
-
+export default Page;
