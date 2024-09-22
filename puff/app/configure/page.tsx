@@ -15,14 +15,14 @@ const ActualPage = () => {
             "value": {"value": `https://pruffofpuff-xyz.pages.dev/profile/${identifier}`}
         }
     };
-    router.push('com.washow.nfcopenrewriter://share?data=' + encodeURIComponent(JSON.stringify(payload)));
+    router.push('com.washow.nfcopenrewriter://share?data=' + JSON.stringify(payload));
     return "";
 };
 const Page = () => {
     return (
         // You could have a loading skeleton as the `fallback` too
         <Suspense>
-            <ActualPage />
+            <ActualPage/>
         </Suspense>
     )
 }
