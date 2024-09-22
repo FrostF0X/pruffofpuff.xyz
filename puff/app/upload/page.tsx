@@ -1,11 +1,11 @@
 "use client"
-import {useEffect, useState} from 'react';
+import {Suspense, useEffect, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {privateKeyToAccount} from 'viem/accounts';
 
 import axios from 'axios';
 
-const UploadPage = () => {
+const ActualPage = () => {
     const params = useSearchParams();
     const puffs = params.get('puffs');
     const router = useRouter();
@@ -56,4 +56,12 @@ const UploadPage = () => {
     );
 };
 
+export function UploadPage() {
+    return (
+        // You could have a loading skeleton as the `fallback` too
+        <Suspense>
+            <ActualPage />
+        </Suspense>
+    )
+}
 export default UploadPage;

@@ -1,5 +1,5 @@
 "use client"
-import {useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 import contracts from '../../contracts/deployedContracts';
 
@@ -10,7 +10,7 @@ import {
 import {parseEther} from "viem";
 import {chain, tempGas} from "@/lib/wagmi";
 
-const MintPage = () => {
+const ActualPage = () => {
     const wallets = useConnectors();
     const params = useSearchParams();
     const router = useRouter();
@@ -50,5 +50,13 @@ const MintPage = () => {
         </div>
     );
 };
+const MintPage = () => {
+    return (
+        // You could have a loading skeleton as the `fallback` too
+        <Suspense>
+            <ActualPage/>
+        </Suspense>
+    )
+}
 
 export default MintPage;

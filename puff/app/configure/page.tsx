@@ -1,7 +1,8 @@
 "use client"
 import {useRouter, useSearchParams} from 'next/navigation';
+import React, {Suspense} from "react";
 
-const ConfigurePage = () => {
+const ActualPage = () => {
     const router = useRouter();
     const params = useSearchParams();
     const identifier = params.get('identifier');
@@ -15,6 +16,15 @@ const ConfigurePage = () => {
         }
     };
     router.push('com.washow.nfcopenrewriter://share?data=' + encodeURIComponent(JSON.stringify(payload)));
+    return "";
 };
-
+const ConfigurePage = () => {
+    return (
+        // You could have a loading skeleton as the `fallback` too
+        <Suspense>
+            <ActualPage/>
+        </Suspense>
+    )
+}
 export default ConfigurePage;
+
