@@ -6,7 +6,7 @@ async function bootstrap() {
 
   // Enable CORS with specific options (optional)
   app.enableCors({
-    origin: 'http://localhost:8000', // Allow only specific origin
+    origin: ['http://localhost:8000', 'https://pruffofpuff-xyz.pages.dev'], // Allow only specific origin
     credentials: true, // Enable credentials like cookies
   });
   await app.listen(3000);
