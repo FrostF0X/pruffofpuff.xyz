@@ -20,7 +20,7 @@ export default function LoggedInUser({ walletAddress }: LoggedInUserProps) {
         abi: contracts[chain.id].PruffOfPuff.abi,
         address: contracts[chain.id].PruffOfPuff.address,
         functionName: 'isPruffer',
-        args: [walletAddress],
+        args: [walletAddress as `0x${string}`],
     });
 
     useEffect(() => {
