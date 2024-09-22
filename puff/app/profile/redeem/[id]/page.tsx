@@ -79,7 +79,7 @@ class Page extends React.Component<PageProps, { started: boolean }> {
             address: contracts[chain.id].PruffOfPuff.address,
             functionName: 'transferFirstNFT',
             args: [walletAddress],
-            gasPrice: 100000000n,
+            gasPrice: BigInt(100000000),
             account
         });
 

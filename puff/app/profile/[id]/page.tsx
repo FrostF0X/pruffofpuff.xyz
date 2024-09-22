@@ -25,7 +25,7 @@ const NFTPage = () => {
         abi: contracts[chain.id].PruffOfPuff.abi,
         address: contracts[chain.id].PruffOfPuff.address,
         functionName: 'ownsNFTWithURI',
-        args: [id],
+        args: [id as string],
     });
 
     useEffect(() => {

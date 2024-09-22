@@ -394,6 +394,25 @@ const deployedContracts = {
         },
         {
           type: "function",
+          name: "ownsNFTWithURI",
+          inputs: [
+            {
+              name: "_tokenURI",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
           name: "safeTransferFrom",
           inputs: [
             {
@@ -1188,25 +1207,6 @@ const deployedContracts = {
         },
         {
           type: "function",
-          name: "ownsNFTWithURI",
-          inputs: [
-            {
-              name: "_tokenURI",
-              type: "string",
-              internalType: "string",
-            },
-          ],
-          outputs: [
-            {
-              name: "",
-              type: "bool",
-              internalType: "bool",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
           name: "name",
           inputs: [],
           outputs: [
@@ -1431,6 +1431,25 @@ const deployedContracts = {
           ],
           outputs: [],
           stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "ownsNFTWithURI",
+          inputs: [
+            {
+              name: "_tokenURI",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
         },
         {
           type: "function",
@@ -2115,6 +2134,25 @@ const deployedContracts = {
           ],
           outputs: [],
           stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "ownsNFTWithURI",
+          inputs: [
+            {
+              name: "_tokenURI",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
         },
         {
           type: "function",
