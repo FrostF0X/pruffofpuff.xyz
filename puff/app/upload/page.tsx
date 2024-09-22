@@ -1,6 +1,7 @@
 "use client"
 import {useEffect, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
+import {privateKeyToAccount} from 'viem/accounts';
 
 import axios from 'axios';
 
@@ -24,12 +25,12 @@ const UploadPage = () => {
                     partnerName: 'flow',
                 });
 
-                const {identifier, walletAddress} = response.data;
+                const {identifier, privateKey} = response.data;
 
-
+                const address =  privateKeyToAccount(privateKey);
                 const url = new URL('/mint', window.location.origin);
                 url.searchParams.set('identifier', identifier);
-                url.searchParams.set('walletAddress', walletAddress);
+                url.searchParams.set('walletAddress', address.address);
                 // Pass the selected puffs as a query parameter to the upload page
                 router.push(url.href);
             } catch (error) {

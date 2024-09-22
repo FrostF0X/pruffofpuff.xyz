@@ -917,7 +917,7 @@ const deployedContracts = {
   },
   11155111: {
     PruffOfPuff: {
-      address: "0x4f047dD2a15C735150A00BF23f43BfE23014f4fB",
+      address: "0xb2253A1029448107010C6b7Dfcc9FA7d9D0F0387",
       abi: [
         {
           type: "constructor",

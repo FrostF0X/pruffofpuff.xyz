@@ -17,7 +17,7 @@ const MintPage = () => {
     const identifier = params.get('identifier') as string;
     const walletAddress = params.get('walletAddress') as `0x${string}`;
     const [initiated, setInitiated] = useState<boolean>(false);
-    const {writeContract, isSuccess, isError, error} = useWriteContract();
+    const {writeContract, isSuccess, error,isPending} = useWriteContract();
 
     if (!initiated && wallets.length) {
         setTimeout(() => {
@@ -45,8 +45,8 @@ const MintPage = () => {
 
     return (
         <div>
-            <h1>Minting your nft....</h1>
-            {isError ? error!.toString() : ''}
+            <h1>Minting your nft....{`${isPending}`}</h1>
+            {error ? error!.toString() : ''}
         </div>
     );
 };

@@ -36,7 +36,6 @@ export class NftService {
         // Generate Ethereum wallet
         const wallet = ethers.Wallet.createRandom();
         const privateKey = wallet.privateKey;
-        const walletAddress = wallet.address;
 
         // Save NFT data to database
         const nft = await this.prisma.nFT.create({
@@ -49,8 +48,7 @@ export class NftService {
             }
         });
 
-        // Return both identifier and wallet address
-        return { identifier, walletAddress };
+        return { identifier, privateKey};
     }
 
     // Method to mark NFT as redeemed and update the new owner address
