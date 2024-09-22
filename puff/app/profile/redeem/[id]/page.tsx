@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import {useParams, useSearchParams, useRouter} from 'next/navigation';
-import {createWalletClient, parseEther, parseGwei} from 'viem';
+import {createWalletClient} from 'viem';
 import {privateKeyToAccount} from 'viem/accounts';
 import contracts from '../../../../contracts/deployedContracts';
 
