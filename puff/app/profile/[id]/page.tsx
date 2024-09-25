@@ -9,6 +9,7 @@ const NFTPage = () => {
     const [loading, setLoading] = useState(true);
     const [nftData, setNftData] = useState<{
         telegramUsername: string,
+        telegramImageUrl: string,
         username: string,
         firstName: string,
         lastName: string,
@@ -57,13 +58,16 @@ const NFTPage = () => {
 
     return (
         <div>
-            <div><a href={`https://t.me/${nftData.telegramUsername}`}
-                    className="href">TELEGRAM: {nftData.telegramUsername}</a></div>
-            <div>USERNAME: {nftData.username}</div>
-            <div>FIRST NAME: {nftData.firstName}</div>
-            <div>LAST NAME: {nftData.lastName}</div>
-            <div>JOB TITLE: {nftData.jobTitle}</div>
-            <div>Tshirt SIZE: {nftData.tshirtSize}</div>
+            <div style={{'display': 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                <img src={`${nftData.telegramImageUrl}`} alt=""
+                     style={{width: '200px', height: '200px', borderRadius: '50%'}}/>
+            </div>
+            <div>
+                <a href={`https://t.me/${nftData.telegramUsername}`}
+                   className="href">{nftData.telegramUsername}</a>
+            </div>
+            <div>Dims</div>
+            <div>CTO - Lugovska Merch</div>
             <button onClick={() => {
                 setShowDynamicUserProfile(true);
             }}>EDIT PROFILE
