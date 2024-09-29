@@ -1,17 +1,6 @@
 /** @type {import('next').NextConfig} */
 const cspHeader = `
-    default-src 'self';
-    frame-src 'self' https://secure.walletconnect.org/;
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com https://vercel.live https://*.vercel.app https://www.google.com https://www.gstatic.com https://*.google.com https://www.paypal.com https://www.paypalobjects.com https://auth.magic.link https://pruffofpuff-xyz.vercel.app;
-    style-src 'self' 'unsafe-inline';
-    connect-src https://api.web3modal.org;
-    img-src 'self' blob: data:;
-    font-src 'self';
-    object-src 'none';
-    base-uri 'self';
-    form-action 'self';
-    frame-ancestors 'none';
-    upgrade-insecure-requests;
+default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';
 `
 
 const nextConfig = {
