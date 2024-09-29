@@ -10,7 +10,7 @@ if (!projectId) throw new Error("Project ID is not defined");
 export const metadata = {
     name: "merch.wars",
     description: "Merch Wars",
-    url: "https://pruffofpuff-xyz.pages.dev", // origin must match your domain & subdomain
+    url: "https://pruffofpuff-xyz.vercel.app", // origin must match your domain & subdomain
     icons: ["https://avatars.githubusercontent.com/u/37784886"]
 };
 
