@@ -112,7 +112,7 @@ function main() {
     });
   });
 
-  const TARGET_DIR = "../puff/contracts/";
+  const TARGET_DIR = "../front/contracts/";
 
   const fileContent = Object.entries(allGeneratedContracts).reduce(
     (content, [chainId, chainConfig]) => {

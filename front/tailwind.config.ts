@@ -12,6 +12,9 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        'regular': 'Myriad Pro, sans-serif',
+      }
     },
   },
   plugins: [],

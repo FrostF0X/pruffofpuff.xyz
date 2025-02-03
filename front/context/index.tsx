@@ -20,9 +20,12 @@ createWeb3Modal({
     enableOnramp: false, // Optional - false as default
     themeMode: "light", // By default - set to user system settings
     themeVariables: {
-        "--w3m-font-family": "Verdana", // Base font family
-        "--w3m-border-radius-master": "2px",
-        "--w3m-z-index": 1
+        "--w3m-font-family": "Myriad Pro", // Base font family
+        "--w3m-border-radius-master": "0",
+        "--w3m-z-index": 1,
+        "--w3m-color-mix": "#1a009e",
+        "--w3m-color-mix-strength": 100,
+        "--w3m-accent": "#1a009e",
     }
 });
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "../contracts/PruffOfPuff.sol";
+import "../contracts/MrrrrrchKL2024.sol";
 import "./DeployHelpers.s.sol";
 
 
@@ -19,18 +19,17 @@ contract DeployScript is ScaffoldETHDeploy {
         vm.startBroadcast(deployerPrivateKey);
 
         // Declare a variable to hold the contract instance
-        PruffOfPuff pruffOfPuffInstance = new PruffOfPuff();
+        MrrrrrchKL2024 i = new MrrrrrchKL2024();
 
         // Log the address of the deployed contract
         console.logString(
             string.concat(
-                "PruffOfPuff deployed at: ",
-                vm.toString(address(pruffOfPuffInstance)) // Convert the instance to its address
+                "MrrrrrchKL2024 deployed at: ",
+                vm.toString(address(i)) // Convert the instance to its address
             )
         );
 
-        pruffOfPuffInstance.addAdmin(address(0xAe74fE44cc21d7fE604572ed4b898303957Dde83));
-        pruffOfPuffInstance.addPruffer(address(0xAe74fE44cc21d7fE604572ed4b898303957Dde83));
+        i.setServerAddress(address(0xad21E1159CA9e568968E64B47241e7BcF180ae85));
         vm.stopBroadcast();
 
         // Call exportDeployments to save the ABI, etc.

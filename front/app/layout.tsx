@@ -22,7 +22,7 @@ export default function RootLayout({
   const initialState = cookieToInitialState(config, headers().get("cookie")); // added
   return (
       <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} main`}>
       <Web3ModalProvider initialState={initialState}>{children}</Web3ModalProvider>
       </body>
       </html>

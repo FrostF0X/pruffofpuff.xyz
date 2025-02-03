@@ -1,10 +1,10 @@
 [profile.default]
-rpc_url = "https://testnet.evm.nodes.onflow.org"
+rpc_url = "https://scroll-sepolia.infura.io/v3/2Tzu4Tlj8T1fxH1UfhsNuuW63IA"
 src = 'contracts'
 out = 'out'
 libs = ['lib']
 fs_permissions = [{ access = "read-write", path = "./"}]
-chain_id = 545
+chain_id = 534351
 
 [rpc_endpoints]
 default_network = "http://127.0.0.1:8545"
@@ -29,7 +29,6 @@ zkSyncTestnet = "https://testnet.era.zksync.dev"
 zkSync = "https://mainnet.era.zksync.io"
 scrollSepolia = "https://sepolia-rpc.scroll.io"
 scroll = "https://rpc.scroll.io"
-evmflowtestnet = "https://testnet.evm.nodes.onflow.org"
 
 [etherscan]
 polygonMumbai = { key = "${ETHERSCAN_API_KEY}" }
